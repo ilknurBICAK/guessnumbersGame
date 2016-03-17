@@ -1,0 +1,640 @@
+import java.util.Random;
+import java.util.Scanner;
+
+
+public class PlayerGame {
+	  
+
+	public static Player player;
+
+    public static PlayerGame p;
+
+    public static boolean a = false;
+
+
+
+    public static String number;
+
+
+
+    public static void main(String[] args) {
+
+
+
+        System.out.println("Welcome To Game !!");
+
+        System.out.println("Enter a user's name :");
+
+        Scanner name = new Scanner(System.in);
+
+        String nameOfPlayer = name.nextLine();
+
+
+
+        player = new Player(nameOfPlayer);
+
+        p = new PlayerGame();
+
+
+
+        GameMenu();
+
+        p.generateReport();
+
+
+
+    }
+
+
+
+    public static void GameMenu() {
+
+        boolean isContinue = true;
+
+        System.out.println("\n1. Start Game\n2. End Game");
+
+        Scanner input = new Scanner(System.in);
+
+        int choice = input.nextInt();
+
+        while (isContinue) {
+
+             switch (choice) {
+
+             case 1: {
+
+                  p.adamAsmaca();
+
+                  if (player.maxLevel == 4) {
+
+                       isContinue = false;
+
+                  }
+
+             }
+
+                  break;
+
+             case 2: {
+
+                  p.generateReport();
+
+                  isContinue = false;
+
+             }
+break;
+
+
+
+             }
+
+        }
+
+    }
+
+
+
+    public void generateReport() {
+
+        System.out.println("User's name: " + player.nameOfPlayer
+
+                  + "\nNumber of times game played: " + player.playCount + "\n Number of wins: "
+
+                  + player.numWin + "\nMaximum level: " + player.maxLevel);
+
+
+
+    }
+
+
+
+    public void adamAsmaca() {
+
+        switch (player.maxLevel) {
+
+        case 1:
+
+              gameOne();
+
+             break;
+
+        case 2:
+
+             gameTwo();
+
+             break;
+
+        case 3:
+
+             gameThree();
+
+             break;
+
+        default:
+
+             break;
+
+        }
+
+        if (!a) {
+
+             System.out.println("You lost the Game!");
+
+             GameMenu();
+
+        }
+
+    }
+
+
+
+    private static void gameThree() {
+
+        if (player.maxLevel == 3) {
+
+             Random rnd2 = new Random();
+
+             number = "" + (10000 + rnd2.nextInt(90000));
+
+             int[] Dizi = new int[5];
+
+             Dizi[0] = Integer.parseInt(number) / 10000;
+
+             Dizi[1] = (Integer.parseInt(number) % 10000) / 1000;
+
+             Dizi[2] = ((Integer.parseInt(number) % 10000) % 1000) / 100;
+
+             Dizi[3] = (((Integer.parseInt(number) % 10000) % 1000) % 100) / 10;
+
+             Dizi[4] = ((((Integer.parseInt(number) % 10000) % 1000) % 100) % 10) / 1;
+
+             String result = "";
+
+             for (int i = 0; i < 12; i++)// 5 digits and the user has 12 guess chances
+
+             {
+
+                  int[] enter1 = new int[5];
+
+                  System.out.println("Please enter the 5-digit number (Last "
+
+                           + (12 - i) + " chance).");
+
+                  Scanner input = new Scanner(System.in);
+
+                  int enter = input.nextInt();
+
+
+
+                  enter1[0] = enter / 10000;
+
+                  enter1[1] = ((enter) % 10000) / 1000;
+
+                  enter1[2] = (((enter) % 10000) % 1000) / 100;
+
+                  enter1[3] = ((((enter) % 10000) % 1000) % 100) / 10;
+
+                  enter1[4] = (((((enter) % 10000) % 1000) % 100) % 10) / 1;
+
+                  result= "";
+
+                  if (enter1[0] == Dizi[0]) {
+
+                      result += Dizi[0];
+
+                  } else {
+
+                      result += "*";
+
+                  }
+
+                  if (enter1[1] == Dizi[1]) {
+
+                      result += Dizi[1];
+
+                  } else {
+
+                      result += "*";
+
+                  }
+
+                  if (enter1[2] == Dizi[2]) {
+
+                      result += Dizi[2];
+
+                  } else {
+
+                      result += "*";
+
+                  }
+
+                  if (enter1[3] == Dizi[3]) {
+
+                      result += Dizi[3];
+
+                  } else {
+
+                      result += "*";
+
+                  }
+
+                  if (enter1[4] == Dizi[4]) {
+
+                      result += Dizi[4];
+
+                  } else {
+
+                      result += "*";
+
+                  }
+
+                  int hold = 0;
+
+                  String[] sss = new String[5];
+
+                  sss[0] = String.valueOf( result.charAt(0));
+
+                  sss[1] = String.valueOf(result.charAt(1));
+
+                  sss[2] = String.valueOf(result.charAt(2));
+
+                  sss[2] = String.valueOf(result.charAt(3));
+
+                  sss[3] = String.valueOf(result.charAt(4));
+
+                  for (int n = 0; n < sss.length; n++) {
+
+                       if (sss[n] != "*") {
+
+                           if (hold <= 5) {
+
+                                hold++;
+
+                                continue;
+
+                           }
+
+                       } else {
+System.out.println("You lost the Game!");
+                           break;
+
+                       }
+
+                  }
+
+                  if (hold == 5) {
+
+                       if ((result.equals(number))) {
+
+                    	   result = Dizi[0] + "" + Dizi[1] + "" + Dizi[2] + ""
+
+                                     + Dizi[3] + "" + Dizi[4];
+
+           System.out.println("Number: "+ result+ " -->You know your (" + (i + 1) + ".change ).\n You win the Game");
+
+                           player.playCount += i + 1;
+
+                           player.increasemaxLevel();
+
+                           player.numWin = 3;
+
+                           a = true;
+
+                           break;
+
+                       } else
+
+                           a = false;
+
+                  }
+
+
+
+                  System.out.println(result);
+
+             }
+
+        }
+
+
+
+    }
+
+
+
+    private static void gameTwo() {
+
+
+
+        if (player.maxLevel == 2) {
+
+             Random rnd1 = new Random();
+
+             number = "" + (1000 + rnd1.nextInt(9000));
+
+             int[] intDizi = new int[4];
+
+             intDizi[0] = (Integer.parseInt(number)) / 1000;
+
+             intDizi[1] = ((Integer.parseInt(number)) % 1000) / 100;
+
+             intDizi[2] = ((Integer.parseInt(number) % 1000) % 100) / 10;
+
+             intDizi[3] = ((((Integer.parseInt(number)) % 1000) % 100) % 10) / 1;
+
+             String result = "";
+
+             for (int i = 0; i < 10; i++)// 2 digits and the user has 10 guess chances
+
+             {
+
+                  int[] enter1 = new int[4];
+
+                  System.out.println("Please enter the 4-digit number(Last "+ (10 - i) + " chance).");
+
+                  Scanner t = new Scanner(System.in);
+
+                  int enter = t.nextInt();
+
+                  enter1[0] = (enter) / 1000;
+
+                  enter1[1] = ((enter) % 1000) / 100;
+
+                  enter1[2] = (((enter) % 1000) % 100) / 10;
+
+                  enter1[3] = ((((enter) % 1000) % 100) % 10) / 1;
+
+                  result= "";
+
+                  if (enter1[0] == intDizi[0]) {
+
+                	  result+= intDizi[0];
+
+                  } else {
+
+                	  result+= "*";
+
+                  }
+
+                  if (enter1[1] == intDizi[1]) {
+
+                	  result += intDizi[1];
+
+                  } else {
+
+                	  result += "*";
+
+                  }
+
+                  if (enter1[2] == intDizi[2]) {
+
+                	  result += intDizi[2];
+
+                  } else {
+
+                	  result+= "*";
+
+                  }
+
+                  if (enter1[3] == intDizi[3]) {
+
+                	 result += intDizi[3];
+
+                  } else {
+
+                	  result+= "*";
+
+                  }
+
+                  int hold = 0;
+
+                  String[] sss = new String[4];
+
+                  sss[0] = String.valueOf(result.charAt(0));
+
+                  sss[1] = String.valueOf(result.charAt(1));
+
+                  sss[2] = String.valueOf(result.charAt(2));
+
+                  sss[3] = String.valueOf(result.charAt(3));
+
+                  for (int n = 0; n < sss.length; n++) {
+
+                       if (sss[n] != "*") {
+
+                           if (hold <= 4) {
+
+                                hold++;
+
+                                continue;
+
+                           }
+
+                       } else {
+                    	   System.out.println("You lost the Game!");
+
+                           break;
+
+                       }
+
+                  }
+
+                  if (hold == 4) {
+
+                       if ((result.equals(number))) {
+
+                    	   result = intDizi[0] + "" + intDizi[1] + "" + intDizi[2]
+
+                                     + "" + intDizi[3];
+
+             System.out.println("Numbers: " + result + " --> You know your (" + (i + 1) + ".change ).\n You win the Game");
+
+                           player.playCount += i + 1;
+
+                           player.increasemaxLevel();
+
+                           player.increasenumWin();
+
+                           a = true;
+
+                           break;
+
+                       } else
+
+                           a = false;
+
+                  }
+
+                  System.out.println(result);
+
+             }
+
+
+
+        }
+
+    }
+
+
+
+    private static void gameOne()
+
+
+
+    {
+
+
+
+        if (player.numWin == 0) {
+
+             Random rnd = new Random();
+
+             number = "" + (100 + rnd.nextInt(900));
+
+             int[] intDizi = new int[3];
+
+
+
+             intDizi[0] = (Integer.parseInt(number)) / 100;
+
+             intDizi[1] = ((Integer.parseInt(number)) % 100) / 10;
+
+             intDizi[2] = (((Integer.parseInt(number)) % 100) % 10) / 1;
+
+             String result = "";
+
+
+
+             for (int i = 0; i < 8; i++)// 1 digits and the user has 8 guess chances
+
+
+             {
+
+                  int[] enter1 = new int[3];
+
+                  System.out.println("Please enter the 3-digit number (Last "
+
+                           + (8 - i) + " chance).");
+
+                  Scanner c = new Scanner(System.in);
+
+                  int enter = c.nextInt();
+
+                  enter1[0] = (enter) / 100;
+
+                  enter1[1] = ((enter) % 100) / 10;
+
+                  enter1[2] = (((enter) % 100) % 10) / 1;
+
+                  result = "";
+
+                  int hold = 0;
+
+                  if (enter1[0] == intDizi[0]) {
+
+                	  result += intDizi[0];
+
+                  } else {
+
+                	  result += "*";
+
+                  }
+
+                  if (enter1[1] == intDizi[1]) {
+
+                	  result+= intDizi[1];
+
+                  } else {
+
+                	  result += "*";
+
+                  }
+
+                  if (enter1[2] == intDizi[2]) {
+
+                	  result += intDizi[2];
+
+                  } else {
+
+                	  result += "*";
+
+                  }
+
+                  String[] sss = new String[3];
+
+                  sss[0] = String.valueOf( result.charAt(0));
+
+                  sss[1] = String.valueOf( result.charAt(1));
+
+                  sss[2] = String.valueOf( result.charAt(2));
+
+                  for (int n = 0; n < sss.length; n++) {
+
+                       if (sss[n] != "*") {
+
+                           if (hold <= 3) {
+
+                                hold++;
+
+                                continue;
+
+                           }
+
+                       } else {
+
+                           System.out.println("You lost the Game! ");
+
+                           break;
+
+                       }
+
+                  }
+
+                  if (hold == 3) {
+
+                       if ((result.equals(number))) {
+
+                           result = intDizi[0] + "" + intDizi[1] + "" + intDizi[2];
+
+                           System.out.println("number: " + result
+
+                                     + " --> You know your (" + (i + 1) + ".change ).\n You win the Game");
+
+                           player.playCount += i + 1;
+
+                           player.increasemaxLevel();
+
+                           player.increasenumWin();
+
+                           a = true;
+
+                           break;
+
+                       } else
+
+                           a = false;
+
+                  }
+
+                  System.out.println(result);
+
+
+
+             }
+
+
+
+        }
+
+    }
+}
+  
+	
+
+
+
+
+
+
+
+
