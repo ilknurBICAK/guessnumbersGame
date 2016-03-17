@@ -1,0 +1,56 @@
+
+public class Player {
+	
+ public String nameOfPlayer;
+ public int numWin=0;
+
+
+ public int playCount=0;
+  public int maxLevel=1;
+ 
+ public Player(String nameOfPlayer){
+		this.nameOfPlayer=nameOfPlayer;
+	}
+
+
+
+public String getNameOfPlayer() {
+	return nameOfPlayer;
+}
+public void setNameOfPlayer(String nameOfPlayer) {
+	this.nameOfPlayer = nameOfPlayer;
+}
+
+
+
+
+public int getNumWin() {
+	return numWin;
+}
+public void setNumWin(int numWin) {
+	this.numWin = numWin;
+}
+public int getPlayCount() {
+	return playCount;
+}
+public void setPlayCount(int playCount) {
+	this.playCount = playCount;
+}
+public int getMaxLevel() {
+	return maxLevel;
+}
+public void setMaxLevel(int maxLevel) {
+	this.maxLevel = maxLevel;
+}
+public void increasenumWin(){
+	this.numWin++;
+}
+public void increaseplayCount(){
+	this.playCount++;
+}
+public void increasemaxLevel(){
+	this.maxLevel++;}
+
+
+}
+
